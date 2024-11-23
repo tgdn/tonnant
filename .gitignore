@@ -9,6 +9,15 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Turbo
+.turbo
+
+# Env
+.env
+
+# For now lets not commit iOS config files since their are handled by Expo
+apps/mobile/ios
+
 # Native
 *.orig.*
 *.jks
