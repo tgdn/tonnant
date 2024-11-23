@@ -1,0 +1,26 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["**/*.{ts,tsx,js,jsx}"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "build/**", "node_modules/.cache/metro/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "run:ios": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
