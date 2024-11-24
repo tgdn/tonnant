@@ -21,6 +21,14 @@
     "run:ios": {
       "cache": false,
       "persistent": true
+    },
+    "prebuild": {
+      "cache": false,
+      "persistent": false
+    },
+    "prebuild-clean": {
+      "cache": false,
+      "persistent": false
     }
   }
 }

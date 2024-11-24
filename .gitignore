@@ -15,8 +15,9 @@ expo-env.d.ts
 # Env
 .env
 
-# For now lets not commit iOS config files since their are handled by Expo
+# iOS config files are handled by Expo
 apps/mobile/ios
+apps/mobile/android
 
 # Native
 *.orig.*
