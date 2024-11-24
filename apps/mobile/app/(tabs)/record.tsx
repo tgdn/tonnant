@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, ScrollView } from "react-native";
 
 // import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import { View } from "@/components/Themed";
 import { RecordButton } from "@/components/RecordButton";
 
 export default function TabTwoScreen() {

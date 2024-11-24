@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Alert, TouchableOpacity } from "react-native";
+import { Alert, Button, TouchableOpacity } from "react-native";
 import { Audio } from "expo-av";
 
 import { Text, View } from "@/components/Themed";
@@ -12,7 +12,7 @@ export function RecordButton() {
 
   async function startRecording() {
     try {
-      if (permissionResponse?.status !== "granted") {
+      if (permissionResponse?.status !== Audio.PermissionStatus.GRANTED) {
         console.log("Requesting permission..");
         await requestPermission();
       }
@@ -23,7 +23,7 @@ export function RecordButton() {
 
       console.log("Starting recording..");
       const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
       );
       setRecording(recording);
       console.log("Recording started");
@@ -44,7 +44,9 @@ export function RecordButton() {
     console.log("Recording stopped and stored at", uri);
   }
   return (
-    <TouchableOpacity onPress={recording ? stopRecording : startRecording}>
+    <TouchableOpacity
+      onPress={() => (recording ? stopRecording : startRecording)}
+    >
       <View>
         <Text>{recording ? "Stop Recording" : "Start Recording"}</Text>
       </View>
@@ -53,7 +55,7 @@ export function RecordButton() {
   return (
     <Button
       title={recording ? "Stop Recording" : "Start Recording"}
-      onPress={recording ? stopRecording : startRecording}
+      onPress={() => (recording ? stopRecording : startRecording)}
     />
   );
 }
