@@ -30,7 +30,8 @@ const printInfoPlugin = {
 
 console.log("Building for", process.env.NODE_ENV);
 // FIXME: check this actually works
-let external = ["@aws-sdk/client-dynamodb", "@aws-sdk/lib-dynamodb"];
+// let external = ["@aws-sdk/client-dynamodb", "@aws-sdk/lib-dynamodb"];
+let external = [];
 const plugins = [];
 if (process.env.NODE_ENV !== "production") {
   plugins.push(printInfoPlugin);
@@ -41,9 +42,9 @@ if (process.env.NODE_ENV !== "production") {
     "react",
     "react-dom",
     "dynamodb-toolbox",
+    // This part is important and makes sure we bundle local dependencies
     ...Object.keys(pkg.dependencies || {}).filter(
-      (packageName) =>
-        !packageName.startsWith("@awarn") && !packageName.startsWith("@watchr"),
+      (packageName) => !packageName.startsWith("@tonnant"),
     ),
     ...Object.keys(pkg.peerDependencies || {}),
   ];
@@ -100,10 +101,6 @@ const __dirname = (await import("node:path")).dirname(__filename);
       "../../packages/db/**/*.(js|ts)",
       "../../packages/shared/src/**/*.(js|ts)",
       "../../packages/backend-utils/src/**/*.(js|ts)",
-      //"../../packages/api/**/*.(js|ts)",
-      //"../../packages/db/**/*.(ts|js)",
-      //"../../packages/emails/**/*.(ts|js|jsx|tsx)",
-      //"!node_modules/@aws-sdk/**",
     ],
     ignore: [
       "node_modules",
@@ -111,7 +108,6 @@ const __dirname = (await import("node:path")).dirname(__filename);
       ".esbuild",
       ".build",
       ".serverless",
-      "dist",
       ".next",
       "**/apps/webapp/**",
       "**/packages/ui/**",
