@@ -1,6 +1,14 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
+  "globalEnv": ["AWS_PROFILE", "ENABLE_SCHEDULER"],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "CLERK_SECRET_KEY",
+    "CLERK_PEM_PUBLIC_KEY",
+    "CLERK_WEBHOOK_SECRET"
+  ],
   "tasks": {
     "lint": {
       "outputs": []
@@ -29,6 +37,11 @@
     "prebuild-clean": {
       "cache": false,
       "persistent": false
+    },
+    "deploy:db": {
+      "cache": false,
+      "persistent": false,
+      "outputs": [".serverless/**"]
     }
   }
 }

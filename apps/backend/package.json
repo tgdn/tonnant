@@ -1,0 +1,56 @@
+{
+  "name": "@tonnant/backend",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit",
+    "dev": "dotenv -e ../../.env -- serverless offline start",
+    "deploy:api": "rm -rf .esbuild .serverless && dotenv -e ../../.env.staging -- serverless deploy --verbose",
+    "deploy:api-production": "rm -rf .esbuild .serverless && dotenv -e ../../.env.production -- serverless deploy --verbose",
+    "script": "tsx --tsconfig ./tsconfig.json ./scripts/run.ts"
+  },
+  "dependencies": {
+    "@tonnant/shared": "*",
+    "@tonnant/db": "*",
+    "@clerk/clerk-sdk-node": "~4.12.16",
+    "@aws-sdk/client-dynamodb": "3.437.0",
+    "@sentry/aws-serverless": "~8.7.0",
+    "@sentry/profiling-node": "~1.2.6",
+    "@t3-oss/env-core": "~0.7.1",
+    "@trpc/server": "11.0.0-alpha-next-2023-11-11-17-32-01.100",
+    "aws-lambda": "~1.0.7",
+    "date-fns": "~3.6.0",
+    "lodash-es": "~4.17.21"
+  },
+  "devDependencies": {
+    "@sentry/esbuild-plugin": "~2.10.2",
+    "@types/aws-lambda": "~8.10.125",
+    "@types/lodash": "~4.14.201",
+    "@types/lodash-es": "~4.17.12",
+    "dotenv": "~16.4.3",
+    "dotenv-cli": "~7.3.0",
+    "serverless": "~3.37.0",
+    "serverless-dotenv-plugin": "~6.0.0",
+    "serverless-esbuild": "~1.54.6",
+    "serverless-lift": "~1.28.1",
+    "serverless-offline": "~13.3.3",
+    "serverless-plugin-aws-alerts": "~1.7.5",
+    "serverless-plugin-monorepo": "~0.11.0",
+    "serverless-plugin-typescript": "~2.1.5",
+    "typescript": "~5.3.3"
+  }
+}

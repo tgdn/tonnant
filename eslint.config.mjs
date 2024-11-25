@@ -1,7 +1,7 @@
-import globals from "globals";
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -47,6 +47,9 @@ export default [
     rules: {
       "react/react-in-jsx-scope": "off",
       "react/no-unescaped-entities": "off",
+      // Note: you must disable the base rule as it can report incorrect errors
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-duplicate-type-constituents": "off",
     },
   },

@@ -13,7 +13,9 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "build": "turbo build",
-    "build:mobile": "turbo build --filter=\"...{./apps/mobile}\""
+    "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
+    "deploy:db": "pnpm --filter @tonnant/db deploy:db",
+    "deploy:db-production": "pnpm --filter @tonnant/db deploy:db-production"
   },
   "private": true,
   "engines": {

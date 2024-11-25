@@ -1,0 +1,115 @@
+service: api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  deploymentMethod: direct
+  region: eu-west-1
+  # Use ARM-based processors for better pricing and performance
+  architecture: arm64
+  memorySize: 256
+  logRetentionInDays: 30 # Let's not store logs forever
+  stage: dev
+  timeout: 450 # 7.5 minutes (API Gateway has a maximum timeout of 30 seconds)
+  runtime: nodejs20.x
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:*
+      Resource: "arn:aws:dynamodb:eu-west-1:*"
+    - Effect: "Allow"
+      Action:
+        - s3:*
+      Resource: "arn:aws:s3:::*"
+    - Effect: "Allow"
+      Action:
+        - ses:*
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - sns:*
+      Resource: "*"
+  environment:
+    NODE_ENV: ${env:NODE_ENV, 'production'}
+    REGION: eu-west-1
+    AWS_ACCOUNT_ID: ${env:AWS_ACCOUNT_ID}
+    CLERK_WEBHOOK_SECRET: ${env:CLERK_WEBHOOK_SECRET}
+    CLERK_SECRET_KEY: ${env:CLERK_SECRET_KEY}
+    CLERK_PEM_PUBLIC_KEY: ${env:CLERK_PEM_PUBLIC_KEY}
+    # Sentry options
+    # SENTRY_AUTH_TOKEN: ${env:SENTRY_AUTH_TOKEN}
+    # SENTRY_DSN: https://7e7a37591277ee4dee25c7593c6bfcae@o4506229521121280.ingest.sentry.io/4506229528920064
+
+plugins:
+  - serverless-esbuild
+  - serverless-lift
+  - serverless-plugin-aws-alerts
+  - serverless-offline
+
+package:
+  individually: true
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+    useChildProcesses: true
+  esbuild:
+    config: "./esbuild.config.cjs"
+  alerts:
+    stages: dev
+    dashboards: false
+    nameTemplate: $[functionName]-$[metricName]-Alarm
+    topics:
+      alarm:
+        topic: ${self:service}-${self:provider.stage}-alerts-alarm
+        notifications:
+          - protocol: email
+            endpoint: thomas@tonnant.com
+          - protocol: email
+            endpoint: t.gakdeluen@gmail.com
+    alarms:
+      - functionErrors
+
+# Serverless Lift
+# constructs:
+#   domains:
+#     type: storage
+#   sendEmailWorkerQueue:
+#     type: queue
+#     worker:
+#       handler: src/sendEmail.handler
+#       timeout: 450
+#     alarm: tgakdeluen@awarn.io
+
+functions:
+  # trpc:
+  #   handler: src/trpc.handler
+  #   timeout: 30
+  #   memorySize: 1024
+  #   environment:
+  #     # Deprecated: this is not used anymore
+  #     WIKIPEDIA_HISTORY_WORKER_QUEUE: wikipediaHistoryWorkerQueue
+  #   events:
+  #     - http:
+  #         path: /trpc
+  #         method: ANY
+  #         cors:
+  #           origin: "*"
+  #           headers: "*"
+  #           allowCredentials: true
+  #     - http:
+  #         path: /trpc/{path+}
+  #         method: ANY
+  #         cors:
+  #           origin: "*"
+  #           headers: "*"
+  #           allowCredentials: true
+
+  clerkWebhook:
+    handler: src/clerkWebhook.handler
+    timeout: 30
+    events:
+      - http:
+          path: /clerk-webhook
+          method: ANY
+          cors: false
