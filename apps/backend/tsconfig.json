@@ -1,17 +1,23 @@
+// {
+//   "compilerOptions": {
+//     "module": "ES2022",
+//     "target": "ES2022",
+//     "preserveConstEnums": true,
+//     "strictNullChecks": true,
+//     "sourceMap": true,
+//     "allowJs": true,
+//     "outDir": ".build",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true,
+//     "lib": ["es2015", "dom", "esnext"],
+//     "jsx": "react",
+//     "rootDir": "./"
+//   },
+//   "exclude": ["node_modules", ".build"]
+// }
+
 {
-  "compilerOptions": {
-    "module": "ES2022",
-    "target": "ES2022",
-    "preserveConstEnums": true,
-    "strictNullChecks": true,
-    "sourceMap": true,
-    "allowJs": true,
-    "outDir": ".build",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "lib": ["es2015", "dom", "esnext"],
-    "jsx": "react",
-    "rootDir": "./"
-  },
-  "exclude": ["node_modules", ".build"]
+  "extends": "@tonnant/tsconfig/internal-package.json",
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

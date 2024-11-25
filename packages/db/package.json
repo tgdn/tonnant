@@ -1,26 +1,20 @@
 {
   "name": "@tonnant/db",
   "exports": {
-    "./*": "./src/*.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./src/*.ts"
     }
   },
   "version": "0.1.0",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "tsc",
     "build": "tsc",
-    "clean": "rm -rf .turbo node_modules",
-    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo node_modules dist",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "deploy:db": "dotenv -e ../../.env.staging -- serverless deploy --verbose"
   },
   "dependencies": {
@@ -35,6 +29,6 @@
     "@types/jsonwebtoken": "^9.0.4",
     "dotenv-cli": "^7.3.0",
     "serverless": "~3.37.0",
-    "typescript": "~5.3.3"
+    "typescript": "~5.7.2"
   }
 }

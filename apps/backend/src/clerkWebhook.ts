@@ -3,7 +3,7 @@ import "./lib/sentry";
 import * as crypto from "crypto";
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import type { WebhookEvent } from "@clerk/clerk-sdk-node";
-import { clerkClient } from "@clerk/clerk-sdk-node";
+// import { clerkClient } from "@clerk/clerk-sdk-node";
 import * as Sentry from "@sentry/aws-serverless";
 
 // import { UsersTable } from "@tonnant/db/users";
@@ -101,19 +101,19 @@ export const handler = Sentry.wrapHandler(
           // Extract user data from Clerk webhook
           const clerkId = webhookInput?.data?.id;
           if (!clerkId) throw new Error("Missing Clerk ID");
-          const {
-            first_name,
-            last_name,
-            image_url,
-            two_factor_enabled,
-            email_addresses,
-            primary_email_address_id,
-          } = webhookInput.data;
-          // Make sure we have a primary email
-          const email = email_addresses?.find(
-            ({ id }) => id === primary_email_address_id,
-          )?.email_address;
-          if (!email) throw new Error("No primary email defined");
+          // const {
+          //   first_name,
+          //   last_name,
+          //   image_url,
+          //   two_factor_enabled,
+          //   email_addresses,
+          //   primary_email_address_id,
+          // } = webhookInput.data;
+          // // Make sure we have a primary email
+          // const email = email_addresses?.find(
+          //   ({ id }) => id === primary_email_address_id,
+          // )?.email_address;
+          // if (!email) throw new Error("No primary email defined");
           // Fetch user ID from Clerk ID
           // TODO: implement
           // const userId = await getUserIdFromClerkId(clerkId);

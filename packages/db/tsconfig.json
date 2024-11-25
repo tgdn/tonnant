@@ -1,5 +1,5 @@
 {
-  "extends": "@tonnant/tsconfig/base.json",
+  "extends": "@tonnant/tsconfig/internal-package.json",
   "include": ["src"],
   "exclude": ["node_modules"]
 }
