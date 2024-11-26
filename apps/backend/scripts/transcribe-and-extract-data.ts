@@ -3,13 +3,8 @@ import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
 
-import {
-  models,
-  runReplicate,
-  WhisperDiarizationInputSchema,
-  WhisperInputSchema,
-  WhisperOutputSchema,
-} from "../src/lib/replicate";
+import { defaultModelInput, ModelName } from "../src/lib/models";
+import { runReplicate } from "../src/lib/replicate";
 
 const openai = new OpenAI();
 
@@ -19,8 +14,9 @@ const filenames: string[] = [
   // "/Users/tgdn/Downloads/recordings/new/Orange.m4a",
   "/Users/tgdn/Downloads/recordings/real-estate.mp4",
 ];
-// const whisperModel = models["victor-upmeet/whisperx"];
-const whisperModel = models["thomasmol/whisper-diarization"];
+// const model: ModelName = "victor-upmeet/whisperx:84d2ad2d6194fe98a17d2b60bef1c7f910c46b2f6fd38996ca457afd9c8abfcb"
+const model: ModelName =
+  "thomasmol/whisper-diarization:cbd15da9f839c5f932742f86ce7def3a03c22e2b4171d42823e83e314547003f";
 
 export default async function main() {
   const promises: ReturnType<typeof transcribeAndExtractData>[] = [];
@@ -40,14 +36,10 @@ async function transcribeAndExtractData(filename: string) {
   const audioFile = await readFile(filename);
   console.log(`Reading file ${filename} done!`);
   console.log("Running Whisper...");
-  // const output = await runReplicate<WhisperInputSchema, WhisperOutputSchema>(
-  const output = await runReplicate<
-    WhisperDiarizationInputSchema,
-    WhisperOutputSchema
-  >(
-    whisperModel.modelId,
+  const output = await runReplicate(
+    model,
     // {
-    //   ...whisperModel.defaultConfig,
+    //   ...defaultModelInput[model],
     //   audio_file: audioFile,
     //   diarization: true,
     //   align_output: false,
@@ -55,7 +47,7 @@ async function transcribeAndExtractData(filename: string) {
     //   min_speakers: 2,
     // },
     {
-      ...whisperModel.defaultConfig,
+      ...defaultModelInput[model],
       file: audioFile,
       num_speakers: 2,
       group_segments: true,
@@ -69,7 +61,13 @@ async function transcribeAndExtractData(filename: string) {
   await writeFile(`${basename}-raw.json`, JSON.stringify(output, null, 2));
   console.log(`Writing file ${basename}-raw.json done!`);
   console.log("Running OpenAI...");
-  const openAiOutput = await runOpenAi(output.segments);
+  // Only send the text and speaker to OpenAI
+  const openAiOutput = await runOpenAi(
+    output.segments.map((segment) => ({
+      text: segment.text,
+      speaker: segment.speaker,
+    })),
+  );
   console.log("Running OpenAI done!");
   if (openAiOutput) {
     console.log(`Writing file ${basename}-parsed.json...`);
@@ -79,10 +77,6 @@ async function transcribeAndExtractData(filename: string) {
     );
     console.log(`Writing file ${basename}-parsed.json...`);
   }
-  return {
-    filename,
-    output,
-  };
 }
 
 const Segments = z.object({
