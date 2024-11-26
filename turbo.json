@@ -42,6 +42,10 @@
       "cache": false,
       "persistent": false,
       "outputs": [".serverless/**"]
+    },
+    "runscript": {
+      "cache": false,
+      "persistent": false
     }
   }
 }

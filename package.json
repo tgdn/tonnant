@@ -15,7 +15,9 @@
     "build": "turbo build",
     "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
     "deploy:db": "pnpm --filter @tonnant/db deploy:db",
-    "deploy:db-production": "pnpm --filter @tonnant/db deploy:db-production"
+    "deploy:db-production": "pnpm --filter @tonnant/db deploy:db-production",
+    "with-env": "dotenv -e .env --",
+    "runscript": "pnpm with-env pnpm -F @tonnant/backend runscript"
   },
   "private": true,
   "engines": {

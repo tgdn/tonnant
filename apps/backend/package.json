@@ -21,7 +21,7 @@
     "dev": "dotenv -e ../../.env -- serverless offline start",
     "deploy:api": "rm -rf .esbuild .serverless && dotenv -e ../../.env.staging -- serverless deploy --verbose",
     "deploy:api-production": "rm -rf .esbuild .serverless && dotenv -e ../../.env.production -- serverless deploy --verbose",
-    "script": "tsx --tsconfig ./tsconfig.json ./scripts/run.ts"
+    "runscript": "tsx --tsconfig ./tsconfig.json ./scripts/run.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.437.0",
@@ -34,7 +34,8 @@
     "@trpc/server": "11.0.0-alpha-next-2023-11-11-17-32-01.100",
     "aws-lambda": "~1.0.7",
     "date-fns": "~3.6.0",
-    "lodash-es": "~4.17.21"
+    "lodash-es": "~4.17.21",
+    "tsx": "^4.19.2"
   },
   "devDependencies": {
     "@sentry/esbuild-plugin": "~2.10.2",
