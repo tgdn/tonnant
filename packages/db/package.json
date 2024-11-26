@@ -1,9 +1,9 @@
 {
   "name": "@tonnant/db",
   "exports": {
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./src/*.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
     }
   },
   "version": "0.1.0",
