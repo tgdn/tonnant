@@ -10,9 +10,10 @@ const openai = new OpenAI();
 
 const filenames: string[] = [
   // "/Users/tgdn/Downloads/recordings/new/Rolex.m4a",
-  // "/Users/tgdn/Downloads/recordings/new/SFR.m4a",
-  // "/Users/tgdn/Downloads/recordings/new/Orange.m4a",
-  "/Users/tgdn/Downloads/recordings/real-estate.mp4",
+  "/Users/tgdn/Downloads/recordings/new/SFR.m4a",
+  "/Users/tgdn/Downloads/recordings/new/Orange.m4a",
+  // "/Users/tgdn/Downloads/recordings/real-estate.mp4",
+  // "/Users/tgdn/Downloads/recordings/new/Frédérique Constant.m4a",
 ];
 // const model: ModelName = "victor-upmeet/whisperx:84d2ad2d6194fe98a17d2b60bef1c7f910c46b2f6fd38996ca457afd9c8abfcb"
 const model: ModelName =
@@ -50,11 +51,10 @@ async function transcribeAndExtractData(filename: string) {
       ...defaultModelInput[model],
       file: audioFile,
       num_speakers: 2,
-      group_segments: true,
+      group_segments: false,
       transcript_output_format: "both",
     },
   );
-  console.log(output.segments?.[0]);
   console.log("Running Whisper done!");
   const basename = filename.split(/[\\/]/).pop();
   console.log(`Writing file ${basename}-raw.json...`);
@@ -83,7 +83,7 @@ const Segments = z.object({
   segments: z.array(
     z.object({
       text: z.string(),
-      speaker: z.string(),
+      speaker: z.enum(["customer", "sales"]),
     }),
   ),
 });
