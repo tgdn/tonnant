@@ -17,14 +17,14 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@t3-oss/env-core": "^0.7.1",
-    "d3-dsv": "2",
-    "superjson": "1.13.1",
-    "zod": "^3.23.8"
+    "@t3-oss/env-core": "catalog:",
+    "d3-dsv": "catalog:",
+    "superjson": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tonnant/tsconfig": "*",
-    "@types/jsonwebtoken": "^9.0.4",
-    "typescript": "~5.7.2"
+    "@types/jsonwebtoken": "catalog:",
+    "typescript": "catalog:"
   }
 }

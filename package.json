@@ -1,7 +1,7 @@
 {
   "name": "tonnant",
   "version": "1.0.0",
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
   "scripts": {
     "dev": "turbo dev",
     "dev:mobile": "turbo dev --filter=\"{./apps/mobile}...\"",
@@ -27,19 +27,19 @@
     "react": "18.3.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.15.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
-    "@types/jest": "^29.5.14",
-    "eslint": "^9.15.0",
-    "eslint-plugin-react": "^7.37.2",
-    "globals": "^15.12.0",
-    "jest": "^29.2.1",
-    "jest-expo": "~52.0.2",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.9",
-    "ts-node": "^10.9.2",
-    "turbo": "2.3.0",
-    "typescript": "~5.7.2",
-    "typescript-eslint": "^8.15.0"
+    "@eslint/js": "catalog:",
+    "@ianvs/prettier-plugin-sort-imports": "catalog:",
+    "@types/jest": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "globals": "catalog:",
+    "jest": "catalog:",
+    "jest-expo": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:",
+    "ts-node": "catalog:",
+    "turbo": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
   }
 }
