@@ -14,9 +14,9 @@ You can install pnpm with your package manager of choice:
 
 These commands should be run at the root of the project:
 
-1. nvm use: Sets the version of node specified in .nvmrc
-2. pnpm i: Installs node dependencies in all packages;
-3. pnpm dev -F @tonnant/backend: Starts backend development server
+1. `nvm use`: Sets the version of node specified in .nvmrc
+2. `pnpm i`: Installs node dependencies in all packages;
+3. `pnpm dev -F @tonnant/backend`: Starts backend development server
 
 ## Toolchain Overview
 
