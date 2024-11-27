@@ -1,13 +1,16 @@
+import { useEffect } from "react";
+import { useFonts } from "expo-font";
+import { Slot, Stack } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import * as SplashScreen from "expo-splash-screen";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
@@ -21,6 +24,13 @@ export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(tabs)",
 };
+
+const clerkPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+if (!clerkPublishableKey) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
+  );
+}
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync().catch(console.error);
@@ -47,7 +57,14 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <ClerkProvider tokenCache={tokenCache} publishableKey={clerkPublishableKey}>
+      <ClerkLoaded>
+        <Slot />
+        {/* <RootLayoutNav /> */}
+      </ClerkLoaded>
+    </ClerkProvider>
+  );
 }
 
 function RootLayoutNav() {
@@ -62,3 +79,29 @@ function RootLayoutNav() {
     </ThemeProvider>
   );
 }
+
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      const item = await SecureStore.getItemAsync(key);
+      if (item) {
+        console.log(`${key} was used 🔐 \n`);
+      } else {
+        console.log("No values stored under key: " + key);
+      }
+      return item;
+    } catch (error) {
+      console.error("SecureStore get item error: ", error);
+      await SecureStore.deleteItemAsync(key);
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  },
+};

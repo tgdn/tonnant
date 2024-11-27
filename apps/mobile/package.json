@@ -3,26 +3,28 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "dev": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
-    "start": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
+    "dev": " EXPO_USE_METRO_WORKSPACE_ROOT=1 dotenv -e ../../.env  -- expo start",
+    "start": " EXPO_USE_METRO_WORKSPACE_ROOT=1 dotenv -e ../../.env.staging -- expo start",
     "prebuild": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo prebuild",
     "prebuild-clean": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo prebuild --clean",
-    "run:android": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo run:android",
-    "run:ios": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo run:ios",
-    "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web",
+    "run:android": "EXPO_USE_METRO_WORKSPACE_ROOT=1 dotenv -e ../../.env.staging -- expo run:android",
+    "run:ios": "EXPO_USE_METRO_WORKSPACE_ROOT=1 dotenv -e ../../.env.staging -- expo run:ios",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "catalog:",
     "@expo/vector-icons": "catalog:",
     "@react-navigation/native": "catalog:",
     "expo": "catalog:",
     "expo-audio": "catalog:",
     "expo-av": "catalog:",
+    "expo-crypto": "~14.0.1",
     "expo-dev-client": "catalog:",
     "expo-font": "catalog:",
     "expo-linking": "catalog:",
     "expo-router": "catalog:",
+    "expo-secure-store": "~14.0.0",
     "expo-splash-screen": "catalog:",
     "expo-status-bar": "catalog:",
     "expo-system-ui": "catalog:",
@@ -33,6 +35,7 @@
     "react-native-reanimated": "catalog:",
     "react-native-safe-area-context": "catalog:",
     "react-native-screens": "catalog:",
+    "react-native-unistyles": "^2.20.0",
     "react-native-web": "catalog:"
   },
   "devDependencies": {
@@ -40,7 +43,8 @@
     "@babel/runtime": "catalog:",
     "@testing-library/react-native": "catalog:",
     "@types/react": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "dotenv-cli": "catalog:"
   },
   "private": true
 }
