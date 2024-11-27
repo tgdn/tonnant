@@ -1,12 +1,17 @@
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet } from "react-native";
+import { useClerk, useUser } from "@clerk/clerk-expo";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 
-export default function TabTwoScreen() {
+export default function ProfileScreen() {
+  const { user } = useUser();
+  const { signOut } = useClerk();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+      <Button title="Sign out" onPress={() => signOut({ redirectUrl: "/" })} />
+      {/* <Text style={styles.title}>Tab Two</Text> */}
       <View
         style={styles.separator}
         lightColor="#eee"
