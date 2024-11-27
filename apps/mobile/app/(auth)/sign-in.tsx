@@ -15,13 +15,13 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { LogoWithText } from "@/components/LogoWithText";
 
 export default function SignInScreen() {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const onSignInPress = React.useCallback(async () => {
-    if (!isLoaded) {
+    if (!isLoaded || !emailAddress || !password) {
       return;
     }
 
@@ -63,6 +63,7 @@ export default function SignInScreen() {
             autoCapitalize="none"
             value={emailAddress}
             placeholder="Email..."
+            placeholderTextColor={theme.colors.sonicSilver}
             onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
           />
           <TextInput
@@ -70,6 +71,7 @@ export default function SignInScreen() {
             value={password}
             placeholder="Password..."
             secureTextEntry={true}
+            placeholderTextColor={theme.colors.sonicSilver}
             onChangeText={(password) => setPassword(password)}
           />
           <Pressable style={styles.button} onPress={onSignInPress}>
@@ -133,7 +135,7 @@ const stylesheet = createStyleSheet((theme) => ({
     color: "white",
   },
   helpText: {
-    color: theme.colors.gray,
+    color: theme.colors.sonicSilver,
   },
   linkText: {
     fontWeight: "500",

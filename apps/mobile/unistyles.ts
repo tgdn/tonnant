@@ -8,8 +8,10 @@ const sharedColors = {
   aloes: "#00d2d3",
   blood: "#ff6b6b",
   purpleBlue: "#5E60FF",
+  electricBlue: "#2f95dc",
   lightGray: "#f5f5f5",
-  gray: "#777777",
+  sonicSilver: "#777777",
+  chineseSilver: "#cccccc",
   dark: "#333333",
 };
 
@@ -35,6 +37,4 @@ declare module "react-native-unistyles" {
 
 UnistylesRegistry.addThemes({
   default: defaultTheme,
-}).addConfig({
-  adaptiveThemes: true,
 });
