@@ -35,6 +35,7 @@
     "react-native-reanimated": "catalog:",
     "react-native-safe-area-context": "catalog:",
     "react-native-screens": "catalog:",
+    "react-native-svg": "15.8.0",
     "react-native-unistyles": "^2.20.0",
     "react-native-web": "catalog:"
   },
@@ -43,8 +44,8 @@
     "@babel/runtime": "catalog:",
     "@testing-library/react-native": "catalog:",
     "@types/react": "catalog:",
-    "typescript": "catalog:",
-    "dotenv-cli": "catalog:"
+    "dotenv-cli": "catalog:",
+    "typescript": "catalog:"
   },
   "private": true
 }
