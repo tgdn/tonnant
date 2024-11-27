@@ -12,6 +12,7 @@ import {
 } from "@react-navigation/native";
 
 import "react-native-reanimated";
+import "../unistyles";
 
 import { useColorScheme } from "@/components/useColorScheme";
 
