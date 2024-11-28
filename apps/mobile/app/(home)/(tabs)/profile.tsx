@@ -1,40 +1,52 @@
-import { Button, StyleSheet } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
 import { useClerk, useUser } from "@clerk/clerk-expo";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function ProfileScreen() {
+  const { styles } = useStyles(stylesheet);
   const { user } = useUser();
   const { signOut } = useClerk();
   return (
-    <View style={styles.container}>
-      <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
-      <Button title="Sign out" onPress={() => signOut({ redirectUrl: "/" })} />
-      {/* <Text style={styles.title}>Tab Two</Text> */}
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <ScrollView style={styles.container}>
+      <View>
+        <Text>
+          You are logged in as{" "}
+          <Text style={styles.emailText}>
+            {user?.emailAddresses[0].emailAddress}
+          </Text>
+        </Text>
+      </View>
+      <View style={{ marginTop: 30 }}>
+        <Pressable
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            gap: 20,
+            alignItems: "center",
+            paddingVertical: 20,
+          }}
+          onPress={() => signOut({ redirectUrl: "/" })}
+        >
+          <FontAwesome size={16} style={{}} name="sign-out" />
+          <Text style={{ fontWeight: "500", fontSize: 16 }}>Sign out</Text>
+        </Pressable>
+      </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((theme) => ({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: theme.spacing.m,
+    paddingHorizontal: theme.spacing.screenGutter,
+    backgroundColor: theme.colors.backgroundColor,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  text: {
+    color: theme.colors.typography,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  emailText: {
+    color: theme.colors.purpleBlue,
   },
-});
+}));
