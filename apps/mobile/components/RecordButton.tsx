@@ -1,69 +1,27 @@
 import * as React from "react";
-import {
-  Alert,
-  Button,
-  Pressable,
-  View,
-  type PressableProps,
-} from "react-native";
+import { Pressable, View, type PressableProps } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-import { Audio } from "expo-av";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-export function RecordButton(props: PressableProps) {
+export function RecordButton({
+  isRecording,
+  ...props
+}: PressableProps & { isRecording: boolean }) {
   const { styles } = useStyles(stylesheet);
-  // const [recording, setRecording] = React.useState<
-  //   Audio.Recording | undefined
-  // >();
-  // const isRecording = !!recording;
-  // const [permissionResponse, requestPermission] = Audio.usePermissions();
-  // async function startRecording() {
-  //   console.log("Starting recording..");
-  //   // TODO: debugging comment to prevent recording
-  //   return;
-  //   try {
-  //     if (permissionResponse?.status !== Audio.PermissionStatus.GRANTED) {
-  //       console.log("Requesting permission..");
-  //       await requestPermission();
-  //     }
-  //     await Audio.setAudioModeAsync({
-  //       allowsRecordingIOS: true,
-  //       playsInSilentModeIOS: true,
-  //     });
-
-  //     console.log("Starting recording..");
-  //     const { recording } = await Audio.Recording.createAsync(
-  //       Audio.RecordingOptionsPresets.HIGH_QUALITY,
-  //     );
-  //     setRecording(recording);
-  //     console.log("Recording started");
-  //   } catch (err) {
-  //     console.error("Failed to start recording", err);
-  //     Alert.alert("Failed to start recording");
-  //   }
-  // }
-  // async function stopRecording() {
-  //   console.log("Stopping recording..");
-  //   setRecording(undefined);
-  //   await recording?.stopAndUnloadAsync();
-  //   await Audio.setAudioModeAsync({
-  //     allowsRecordingIOS: false,
-  //   });
-  //   const uri = recording?.getURI();
-  //   console.log("Recording stopped and stored at", uri);
-  // }
   return (
-    <Pressable
-      // onPress={() => (recording ? stopRecording : startRecording)}
-      style={styles.container}
-      {...props}
-    >
+    <Pressable style={styles.container} {...props}>
       <View style={styles.innerContainer}>
-        <FontAwesome size={38} color="white" name="microphone" />
+        <FontAwesome
+          size={38}
+          color="white"
+          name={isRecording ? "stop" : "microphone"}
+        />
       </View>
     </Pressable>
   );
 }
+
+export function StopButton(props: PressableProps) {}
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {

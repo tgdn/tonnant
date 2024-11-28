@@ -12,6 +12,7 @@ export type RecordingContextState = {
   startRecording: () => void;
   pauseRecording: () => void;
   stopRecording: () => void;
+  isRecording: boolean;
   recordingDuration: [number, number, number];
 };
 
@@ -20,6 +21,7 @@ const RecordingContext = React.createContext<RecordingContextState>(
 );
 
 export function RecordingProvider(props: { children: React.ReactNode }) {
+  const [isRecording, setIsRecording] = React.useState(false);
   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const intervalIdRef = React.useRef<NodeJS.Timeout | null>(null);
   const [recordingDuration, setRecordingDuration] = React.useState<
@@ -32,13 +34,18 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
       return;
     }
     // Handle storing recording duration
-    intervalIdRef.current = setInterval(() => {
-      const recordingDuration = audioRecorder.currentTime;
-      console.log({ recordingDuration });
-      setRecordingDuration(secondsToHms(recordingDuration));
-    }, 1000);
     audioRecorder.record();
+    setIsRecording(true);
+    intervalIdRef.current = setInterval(() => {
+      updateRecordingDuration();
+    }, 500);
+    updateRecordingDuration();
     console.log("Recording started");
+  };
+  const updateRecordingDuration = () => {
+    const recordingDuration = audioRecorder.currentTime;
+    console.log({ recordingDuration });
+    setRecordingDuration(secondsToHms(recordingDuration));
   };
   const pauseRecording = () => {
     if (intervalIdRef.current) {
@@ -49,20 +56,23 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
   };
   const stopRecording = async () => {
     await audioRecorder.stop();
+    setIsRecording(false);
     if (intervalIdRef.current) {
       clearInterval(intervalIdRef.current);
     }
     const uri = audioRecorder.uri;
+    // TODO: handle saving and uploading the recording in the background
     console.log("Recording stopped and stored at", uri);
   };
   return (
     <RecordingContext.Provider
       value={{
         audioRecorder,
+        recordingDuration,
+        isRecording,
         startRecording,
         pauseRecording,
         stopRecording,
-        recordingDuration,
       }}
     >
       {props.children}

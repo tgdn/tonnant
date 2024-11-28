@@ -8,8 +8,13 @@ import { useRecordingContext } from "@/providers/recording.provider";
 export default function TabTwoScreen() {
   const { styles, theme } = useStyles(stylesheet);
 
-  const { audioRecorder, recordingDuration, startRecording, stopRecording } =
-    useRecordingContext();
+  const {
+    audioRecorder,
+    recordingDuration,
+    isRecording,
+    startRecording,
+    stopRecording,
+  } = useRecordingContext();
   const [hoursElapsed, minutesElapsed, secondsElapsed] = recordingDuration;
   return (
     <View style={styles.container}>
@@ -35,8 +40,9 @@ export default function TabTwoScreen() {
         }}
       >
         <RecordButton
+          isRecording={audioRecorder.isRecording}
           onPress={() => {
-            if (audioRecorder.isRecording) {
+            if (isRecording) {
               stopRecording();
             } else {
               startRecording();
