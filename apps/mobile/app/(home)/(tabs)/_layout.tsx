@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable } from "react-native";
+import { useStyles } from "react-native-unistyles";
 import { Link, Redirect, Tabs } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -16,6 +17,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  const { theme } = useStyles();
   const { isSignedIn } = useAuth();
   const colorScheme = useColorScheme();
   if (!isSignedIn) {
@@ -25,13 +27,24 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        headerStyle: {
+          backgroundColor: theme.colors.backgroundColor,
+        },
+        headerTitleStyle: {
+          color: theme.colors.typography,
+        },
+        tabBarStyle: {
+          backgroundColor: "#ffffff",
+          borderColor: theme.colors.chineseSilver,
+        },
+        tabBarActiveTintColor: theme.colors.tint1,
         headerShown: true,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
+          // headerShown: false,
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
