@@ -1,31 +1,33 @@
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView } from "react-native";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { useUser } from "@clerk/clerk-expo";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { Text } from "@/components/Themed";
 
 export default function TabOneScreen() {
+  const { styles } = useStyles(stylesheet);
+  const { user } = useUser();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Text style={styles.title}>Hello {user?.firstName}</Text>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const stylesheet = createStyleSheet((theme) => ({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: theme.colors.backgroundColor,
+  },
+  contentContainer: {
+    paddingHorizontal: theme.spacing.screenGutter,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    color: theme.colors.typography,
+    fontSize: 30,
+    fontWeight: "500",
+    marginTop: theme.spacing.m,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+}));
