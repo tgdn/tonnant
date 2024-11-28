@@ -7,16 +7,10 @@ import { useRecordingContext } from "@/providers/recording.provider";
 
 export default function TabTwoScreen() {
   const { styles, theme } = useStyles(stylesheet);
-  const { audioRecorder, startRecording, stopRecording } =
+
+  const { audioRecorder, recordingDuration, startRecording, stopRecording } =
     useRecordingContext();
-  const recordingDuration = audioRecorder.currentTime;
-  console.log({ recordingDuration });
-  React.useEffect(() => {
-    const intervalId = setInterval(() => {
-      console.log({ recordingDuration });
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const [hoursElapsed, minutesElapsed, secondsElapsed] = recordingDuration;
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -27,7 +21,9 @@ export default function TabTwoScreen() {
             color: theme.colors.typography,
           }}
         >
-          00:00:00
+          {String(hoursElapsed).padStart(2, "0")}:
+          {String(minutesElapsed).padStart(2, "0")}:
+          {String(secondsElapsed).padStart(2, "0")}
         </Text>
       </View>
       <View
