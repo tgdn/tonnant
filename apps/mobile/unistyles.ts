@@ -15,15 +15,29 @@ const sharedColors = {
   dark: "#333333",
 };
 
+const sharedSpacing = {
+  s: 8,
+  m: 16,
+  l: 24,
+  xl: 40,
+};
+
 export const defaultTheme = {
   colors: {
     ...sharedColors,
+    /** Used for the background color of the main container */
     backgroundColor: "#ffffff",
+    /** Used as the main text color */
     typography: "#000000",
-
+    /** TODO: not used for now, remove? */
     accent: sharedColors.blood,
+    /** Used for active elements such as the active tab bar */
+    tint1: sharedColors.purpleBlue,
   },
-  // add any keys/functions/objects/arrays you want!
+  spacing: {
+    ...sharedSpacing,
+    screenGutter: sharedSpacing.l,
+  },
 };
 
 type AppThemes = {
