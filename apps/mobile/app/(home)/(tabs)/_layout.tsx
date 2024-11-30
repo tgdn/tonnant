@@ -1,12 +1,8 @@
 import React from "react";
-import { Pressable } from "react-native";
 import { useStyles } from "react-native-unistyles";
-import { Link, Redirect, Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-
-import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -19,7 +15,6 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const { theme } = useStyles();
   const { isSignedIn } = useAuth();
-  const colorScheme = useColorScheme();
   if (!isSignedIn) {
     return <Redirect href={"/sign-in"} />;
   }
@@ -27,6 +22,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarActiveTintColor: theme.colors.tint1,
+        headerShown: false,
         headerStyle: {
           backgroundColor: theme.colors.backgroundColor,
         },
@@ -37,30 +34,13 @@ export default function TabLayout() {
           backgroundColor: "#ffffff",
           borderColor: theme.colors.chineseSilver,
         },
-        tabBarActiveTintColor: theme.colors.tint1,
-        headerShown: true,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          // headerShown: false,
-          title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
         }}
       />
       <Tabs.Screen
@@ -75,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />

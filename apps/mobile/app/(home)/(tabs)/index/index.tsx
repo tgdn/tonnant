@@ -1,16 +1,17 @@
 import { SafeAreaView, ScrollView } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-import { useUser } from "@clerk/clerk-expo";
 
 import { Text } from "@/components/Themed";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
   const { styles } = useStyles(stylesheet);
-  const { user } = useUser();
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Hello {user?.firstName}</Text>
+      <ScrollView
+        contentContainerStyle={styles.contentContainer}
+        contentInsetAdjustmentBehavior="automatic"
+      >
+        <Text style={styles.title}>Content content</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -26,7 +27,7 @@ const stylesheet = createStyleSheet((theme) => ({
   },
   title: {
     color: theme.colors.typography,
-    fontSize: 30,
+    fontSize: 16,
     fontWeight: "500",
     marginTop: theme.spacing.m,
   },

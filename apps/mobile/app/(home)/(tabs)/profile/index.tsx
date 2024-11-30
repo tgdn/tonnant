@@ -8,7 +8,10 @@ export default function ProfileScreen() {
   const { user } = useUser();
   const { signOut } = useClerk();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentInsetAdjustmentBehavior="automatic"
+    >
       <View>
         <Text>
           You are logged in as{" "}
