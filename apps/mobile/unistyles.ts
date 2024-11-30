@@ -36,7 +36,7 @@ export const defaultTheme = {
   },
   spacing: {
     ...sharedSpacing,
-    screenGutter: sharedSpacing.l,
+    screenGutter: sharedSpacing.m,
   },
 };
 
