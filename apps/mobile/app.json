@@ -17,7 +17,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.galassia.Tonnant",
       "infoPlist": {
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": ["audio"],
+        "UIUserInterfaceStyle": "Light"
       }
     },
     "android": {

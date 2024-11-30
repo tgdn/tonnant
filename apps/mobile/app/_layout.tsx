@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Appearance } from "react-native";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SecureStore from "expo-secure-store";
@@ -31,6 +32,8 @@ const clerkPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync().catch(console.error);
+
+Appearance.setColorScheme("light");
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
