@@ -7,13 +7,19 @@ import {
   type AudioRecorder,
 } from "expo-audio";
 
+type RecordingStatus = "idle" | "recording" | "paused";
+
 export type RecordingContextState = {
   audioRecorder: AudioRecorder;
+  recordingStatus: RecordingStatus;
+  isIdle: boolean;
+  isRecording: boolean;
+  isPaused: boolean;
+  recordingDuration: [number, number, number];
+  formattedRecordingDuration: string;
   startRecording: () => void;
   pauseRecording: () => void;
   stopRecording: () => void;
-  isRecording: boolean;
-  recordingDuration: [number, number, number];
 };
 
 const RecordingContext = React.createContext<RecordingContextState>(
@@ -21,7 +27,8 @@ const RecordingContext = React.createContext<RecordingContextState>(
 );
 
 export function RecordingProvider(props: { children: React.ReactNode }) {
-  const [isRecording, setIsRecording] = React.useState(false);
+  const [recordingStatus, setRecordingStatus] =
+    React.useState<RecordingStatus>("idle");
   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const intervalIdRef = React.useRef<NodeJS.Timeout | null>(null);
   const [recordingDuration, setRecordingDuration] = React.useState<
@@ -35,7 +42,7 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
     }
     // Handle storing recording duration
     audioRecorder.record();
-    setIsRecording(true);
+    setRecordingStatus("recording");
     intervalIdRef.current = setInterval(() => {
       updateRecordingDuration();
     }, 500);
@@ -48,15 +55,17 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
     setRecordingDuration(secondsToHms(recordingDuration));
   };
   const pauseRecording = () => {
+    audioRecorder.pause();
+    setRecordingStatus("paused");
     if (intervalIdRef.current) {
       clearInterval(intervalIdRef.current);
     }
-    audioRecorder.pause();
     console.log("Recording paused");
   };
   const stopRecording = async () => {
     await audioRecorder.stop();
-    setIsRecording(false);
+    setRecordingStatus("idle");
+    setRecordingDuration([0, 0, 0]);
     if (intervalIdRef.current) {
       clearInterval(intervalIdRef.current);
     }
@@ -64,12 +73,17 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
     // TODO: handle saving and uploading the recording in the background
     console.log("Recording stopped and stored at", uri);
   };
+  const formattedRecordingDuration = formatRecordingDuration(recordingDuration);
   return (
     <RecordingContext.Provider
       value={{
         audioRecorder,
         recordingDuration,
-        isRecording,
+        formattedRecordingDuration,
+        recordingStatus,
+        isRecording: recordingStatus === "recording",
+        isPaused: recordingStatus === "paused",
+        isIdle: recordingStatus === "idle",
         startRecording,
         pauseRecording,
         stopRecording,
@@ -86,6 +100,14 @@ function secondsToHms(timeInSeconds: number): [number, number, number] {
   const m = Math.floor((timeInSeconds % 3600) / 60);
   const s = Math.floor((timeInSeconds % 3600) % 60);
   return [h, m, s];
+}
+
+function formatRecordingDuration([hours, minutes, seconds]: [
+  number,
+  number,
+  number,
+]): string {
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 export function useRecordingContext() {
