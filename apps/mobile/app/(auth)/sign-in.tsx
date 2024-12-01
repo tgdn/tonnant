@@ -33,6 +33,7 @@ export default function SignInScreen() {
 
       if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
+        // @ts-expect-error invalid type for router index
         router.replace("/");
       } else {
         // See https://clerk.com/docs/custom-flows/error-handling

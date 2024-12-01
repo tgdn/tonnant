@@ -57,6 +57,7 @@ export default function SignUpScreen() {
 
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
+        // @ts-expect-error invalid type for router index
         router.replace("/");
       } else {
         console.error(JSON.stringify(completeSignUp, null, 2));
