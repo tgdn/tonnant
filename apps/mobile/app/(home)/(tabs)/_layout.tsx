@@ -31,8 +31,8 @@ export default function TabLayout() {
           color: theme.colors.typography,
         },
         tabBarStyle: {
-          backgroundColor: "#ffffff",
-          borderColor: theme.colors.chineseSilver,
+          backgroundColor: theme.colors.backgroundColor,
+          borderColor: "transparent",
         },
       }}
     >
