@@ -1,10 +1,9 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 import { useClerk, useUser } from "@clerk/clerk-expo";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function ProfileScreen() {
-  const { styles } = useStyles(stylesheet);
+  const { styles, theme } = useStyles(stylesheet);
   const { user } = useUser();
   const { signOut } = useClerk();
   return (
@@ -25,14 +24,19 @@ export default function ProfileScreen() {
           style={{
             width: "100%",
             flexDirection: "row",
-            gap: 20,
+            justifyContent: "center",
             alignItems: "center",
-            paddingVertical: 20,
+            paddingVertical: 10,
+            backgroundColor: "#fff",
+            borderRadius: 10,
           }}
           onPress={() => signOut({ redirectUrl: "/" })}
         >
-          <FontAwesome size={16} style={{}} name="sign-out" />
-          <Text style={{ fontWeight: "500", fontSize: 16 }}>Sign out</Text>
+          <Text
+            style={{ color: theme.colors.red, fontSize: theme.fontSizes.m }}
+          >
+            Sign out
+          </Text>
         </Pressable>
       </View>
     </ScrollView>
