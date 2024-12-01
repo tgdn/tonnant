@@ -1,7 +1,7 @@
-
 // TODO: add
+// FIXME: move these to backend-utils to prevent leaking them to the frontend
 export const AWS_ACCOUNT_ID_PROD = "XXXXX";
-export const AWS_ACCOUNT_ID_STAGING = "277707096952";
+export const AWS_ACCOUNT_ID_STAGING = "396913735477";
 export const AWS_ENVIRONMENT: "production" | "staging" =
   process.env.AWS_ACCOUNT_ID === AWS_ACCOUNT_ID_PROD ? "production" : "staging";
 
