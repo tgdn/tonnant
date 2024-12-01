@@ -5,7 +5,7 @@ import { TransactionCanceledException } from "@aws-sdk/client-dynamodb";
 import * as Sentry from "@sentry/aws-serverless";
 import { awsLambdaRequestHandler } from "@trpc/server/adapters/aws-lambda";
 
-// import { flushEvents } from "@awarn/backend-utils/analytics";
+// import { flushEvents } from "@tonnant/backend-utils/analytics";
 import { appRouter, createAwsTrpcContext } from "@tonnant/trpc";
 
 export const handler = Sentry.wrapHandler(
