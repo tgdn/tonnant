@@ -16,6 +16,7 @@ const sharedColors = {
   red: "rgb(255, 59, 48)",
 };
 
+// From https://developer.apple.com/design/human-interface-guidelines/color#Specifications
 const lightGrays = {
   systemGray: "rgb(142, 142, 147)",
   systemGray2: "rgb(174, 174, 178)",
