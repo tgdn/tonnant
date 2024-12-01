@@ -97,7 +97,7 @@ const __dirname = (await import("node:path")).dirname(__filename);
     pattern: [
       // "../../**/*.(js|ts)",
       "src/**/*.(js|ts)",
-      "../../packages/api/src/**/*.(js|ts)",
+      "../../packages/trpc/src/**/*.(js|ts)",
       "../../packages/db/**/*.(js|ts)",
       "../../packages/shared/src/**/*.(js|ts)",
       "../../packages/backend-utils/src/**/*.(js|ts)",
