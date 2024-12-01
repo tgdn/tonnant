@@ -1,9 +1,13 @@
 {
-  "name": "@tonnant/trpc",
+  "name": "@tonnant/backend-utils",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+    "./s3": {
+      "types": "./dist/s3.d.ts",
+      "default": "./src/s3.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
     }
   },
   "version": "0.1.0",
@@ -17,14 +21,11 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "superjson": "catalog:",
-    "zod": "catalog:",
-    "jsonwebtoken": "catalog:",
-    "@tonnant/backend-utils": "catalog:"
+    "@aws-sdk/client-s3": "catalog:",
+    "@aws-sdk/s3-request-presigner": "catalog:"
   },
   "devDependencies": {
     "@tonnant/tsconfig": "*",
-    "@types/jsonwebtoken": "catalog:",
     "typescript": "catalog:"
   }
 }

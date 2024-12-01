@@ -14,6 +14,7 @@
     "test:watch": "jest --watchAll",
     "build": "turbo build",
     "build:mobile": "turbo build --filter=\"...{./apps/mobile}\"",
+    "deploy:api": "pnpm --filter @tonnant/backend deploy:api",
     "deploy:db": "pnpm --filter @tonnant/db deploy:db",
     "deploy:db-production": "pnpm --filter @tonnant/db deploy:db-production",
     "with-env": "dotenv -e .env --",
