@@ -3,9 +3,13 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const userRouter = {
-  // getSession: publicProcedure.query(({ ctx }) => {
-  //   return ctx.session;
-  // }),
+  getSession: protectedProcedure.query(({ ctx }) => {
+    return {
+      userId: ctx.userId,
+      userEmail: ctx.userEmail,
+      clerkId: ctx.clerkId,
+    };
+  }),
   // getSecretMessage: protectedProcedure.query(() => {
   //   return "you can see this secret message!";
   // }),

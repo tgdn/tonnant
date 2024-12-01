@@ -49,6 +49,7 @@ export const createAwsTrpcContext = ({
   // Headers are not lower cased
   const authorization =
     event.headers?.authorization ?? event.headers?.Authorization;
+  console.log({ authorization });
   const ipAddress = event.requestContext?.identity?.sourceIp;
   return createTrpcContextInternal(authorization, source, origin, ipAddress);
 };
@@ -140,7 +141,9 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
   .use(({ ctx, next }) => {
-    if (!ctx.clerkId || !ctx.userId || !ctx.userEmail) {
+    // FIXME: add userId when done
+    // if (!ctx.clerkId || !ctx.userId || !ctx.userEmail) {
+    if (!ctx.clerkId || !ctx.userEmail) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     return next({

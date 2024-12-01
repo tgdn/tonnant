@@ -1,22 +1,14 @@
 import { useState } from "react";
 import { useAuth } from "@clerk/clerk-expo";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { httpBatchLink, loggerLink } from "@trpc/client";
-import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
 
-import type { AppRouter } from "@tonnant/trpc";
+import { api } from "@/utils/api";
+import { getBaseUrl } from "@/utils/base-url";
+import { clientPersister } from "@/utils/persister";
 
-/**
- * A set of typesafe hooks for consuming your API.
- */
-export const api = createTRPCReact<AppRouter>();
-export { type RouterInputs, type RouterOutputs } from "@tonnant/trpc";
-
-/**
- * A wrapper for your app that provides the TRPC context.
- * Use only in _app.tsx
- */
 export function TRPCProvider(props: { children: React.ReactNode }) {
   const { getToken } = useAuth();
   const [queryClient] = useState(() => new QueryClient());
@@ -31,14 +23,13 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
         }),
         httpBatchLink({
           transformer: superjson,
-          url: `${getBaseUrl()}/api/trpc`,
-          headers() {
+          url: `${getBaseUrl()}/trpc`,
+          async headers() {
+            console.log(`${getBaseUrl()}/trpc`);
             const headers = new Map<string, string>();
-            headers.set("x-trpc-source", "expo-react");
-
-            const token = getToken();
-            if (token) headers.set("Authorization", `Bearer ${token}`);
-
+            headers.set("x-trpc-source", "mobile");
+            const token = await getToken();
+            if (token) headers.set("authorization", `Bearer ${token}`);
             return Object.fromEntries(headers);
           },
         }),
@@ -48,9 +39,12 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
 
   return (
     <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: clientPersister }}
+      >
         {props.children}
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </api.Provider>
   );
 }

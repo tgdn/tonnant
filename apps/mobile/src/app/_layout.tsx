@@ -16,6 +16,7 @@ import "react-native-reanimated";
 import "../unistyles";
 
 import { useColorScheme } from "@/components/useColorScheme";
+import { TRPCProvider } from "@/providers/trpc.provider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -94,11 +95,13 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={clerkPublishableKey}>
       <ClerkLoaded>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Slot />
-        </ThemeProvider>
+        <TRPCProvider>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Slot />
+          </ThemeProvider>
+        </TRPCProvider>
       </ClerkLoaded>
     </ClerkProvider>
   );

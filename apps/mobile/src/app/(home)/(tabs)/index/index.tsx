@@ -2,9 +2,12 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 
 import { Text } from "@/components/Themed";
+import { api } from "@/utils/api";
 
 export default function HomeScreen() {
   const { styles } = useStyles(stylesheet);
+  const { data } = api.user.getSession.useQuery();
+  console.log(data);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
