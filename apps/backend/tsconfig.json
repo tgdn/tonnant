@@ -1,5 +1,8 @@
 {
   "extends": "@tonnant/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "checkJs": false
+  },
   "include": ["."],
   "exclude": ["node_modules"]
 }
