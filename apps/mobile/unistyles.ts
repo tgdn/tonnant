@@ -13,6 +13,16 @@ const sharedColors = {
   sonicSilver: "#777777",
   chineseSilver: "#cccccc",
   dark: "#333333",
+  red: "rgb(255, 59, 48)",
+};
+
+const lightGrays = {
+  systemGray: "rgb(142, 142, 147)",
+  systemGray2: "rgb(174, 174, 178)",
+  systemGray3: "rgb(199, 199, 204)",
+  systemGray4: "rgb(209, 209, 214)",
+  systemGray5: "rgb(229, 229, 234)",
+  systemGray6: "rgb(242, 242, 247)",
 };
 
 const sharedSpacing = {
@@ -22,11 +32,19 @@ const sharedSpacing = {
   xl: 40,
 };
 
+const sharedFontSizes = {
+  s: 12,
+  m: 20,
+  l: 24,
+  xl: 40,
+};
+
 export const defaultTheme = {
   colors: {
+    ...lightGrays,
     ...sharedColors,
     /** Used for the background color of the main container */
-    backgroundColor: "#ffffff",
+    backgroundColor: lightGrays.systemGray6,
     /** Used as the main text color */
     typography: "#000000",
     /** TODO: not used for now, remove? */
@@ -37,6 +55,9 @@ export const defaultTheme = {
   spacing: {
     ...sharedSpacing,
     screenGutter: sharedSpacing.m,
+  },
+  fontSizes: {
+    ...sharedFontSizes,
   },
 };
 
