@@ -74,7 +74,9 @@ custom:
       - functionErrors
 
 # Serverless Lift
-# constructs:
+constructs:
+  recordings:
+    type: storage
 #   domains:
 #     type: storage
 #   sendEmailWorkerQueue:
@@ -89,6 +91,9 @@ functions:
     handler: src/trpc.handler
     timeout: 30
     memorySize: 1024
+    environment:
+      RECORDINGS_BUCKET_NAME: ${construct:recordings.bucketName}
+      RECORDINGS_BUCKET_ARN: ${construct:recordings.bucketArn}
     events:
       - http:
           path: /trpc
