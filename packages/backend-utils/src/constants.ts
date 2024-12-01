@@ -1,3 +1,4 @@
-export const RECORDINGS_BUCKET_NAME: string =
-  process.env.RECORDINGS_BUCKET_NAME;
-export const RECORDINGS_BUCKET_ARN: string = process.env.RECORDINGS_BUCKET_ARN;
+export const RECORDINGS_BUCKET_NAME = process.env
+  .RECORDINGS_BUCKET_NAME as string;
+export const RECORDINGS_BUCKET_ARN = process.env
+  .RECORDINGS_BUCKET_ARN as string;

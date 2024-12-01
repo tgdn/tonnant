@@ -37,9 +37,15 @@
     "react-native-screens": "catalog:",
     "react-native-svg": "15.8.0",
     "react-native-unistyles": "^2.20.0",
-    "react-native-web": "catalog:"
+    "react-native-web": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/react-query": "catalog:",
+    "@trpc/server": "catalog:"
   },
   "devDependencies": {
+    "@tonnant/tsconfig": "*",
+    "@tonnant/trpc": "catalog:",
     "@babel/core": "catalog:",
     "@babel/runtime": "catalog:",
     "@testing-library/react-native": "catalog:",

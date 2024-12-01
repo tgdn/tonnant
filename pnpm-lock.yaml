@@ -496,6 +496,12 @@ importers:
       '@testing-library/react-native':
         specifier: 'catalog:'
         version: 12.8.1(jest@29.7.0(@types/node@22.10.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@22.10.0)(typescript@5.7.2)))(react-native@0.76.2(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(encoding@0.1.13)(react@18.3.1))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tonnant/trpc':
+        specifier: 'catalog:'
+        version: link:../../packages/trpc
+      '@tonnant/tsconfig':
+        specifier: '*'
+        version: link:../../packages/typescript
       '@types/react':
         specifier: 'catalog:'
         version: 18.3.12
