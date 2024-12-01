@@ -1,0 +1,29 @@
+{
+  "name": "@tonnant/trpc",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc",
+    "build": "tsc",
+    "clean": "rm -rf .turbo node_modules dist",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "superjson": "catalog:",
+    "zod": "catalog:",
+    "jsonwebtoken": "catalog:"
+  },
+  "devDependencies": {
+    "@tonnant/tsconfig": "*",
+    "@types/jsonwebtoken": "catalog:",
+    "typescript": "catalog:"
+  }
+}

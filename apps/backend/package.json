@@ -30,6 +30,7 @@
     "@sentry/profiling-node": "catalog:",
     "@t3-oss/env-core": "catalog:",
     "@tonnant/db": "catalog:",
+    "@tonnant/trpc": "catalog:",
     "@tonnant/shared": "catalog:",
     "@trpc/server": "catalog:",
     "aws-lambda": "catalog:",

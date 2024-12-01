@@ -85,28 +85,25 @@ custom:
 #     alarm: tgakdeluen@awarn.io
 
 functions:
-  # trpc:
-  #   handler: src/trpc.handler
-  #   timeout: 30
-  #   memorySize: 1024
-  #   environment:
-  #     # Deprecated: this is not used anymore
-  #     WIKIPEDIA_HISTORY_WORKER_QUEUE: wikipediaHistoryWorkerQueue
-  #   events:
-  #     - http:
-  #         path: /trpc
-  #         method: ANY
-  #         cors:
-  #           origin: "*"
-  #           headers: "*"
-  #           allowCredentials: true
-  #     - http:
-  #         path: /trpc/{path+}
-  #         method: ANY
-  #         cors:
-  #           origin: "*"
-  #           headers: "*"
-  #           allowCredentials: true
+  trpc:
+    handler: src/trpc.handler
+    timeout: 30
+    memorySize: 1024
+    events:
+      - http:
+          path: /trpc
+          method: ANY
+          cors:
+            origin: "*"
+            headers: "*"
+            allowCredentials: true
+      - http:
+          path: /trpc/{path+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers: "*"
+            allowCredentials: true
 
   clerkWebhook:
     handler: src/clerkWebhook.handler
