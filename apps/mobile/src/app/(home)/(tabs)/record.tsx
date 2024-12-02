@@ -7,7 +7,6 @@ import { useRecordingContext } from "@/providers/recording.provider";
 
 export default function TabTwoScreen() {
   const { styles, theme } = useStyles(stylesheet);
-
   const {
     formattedRecordingDuration,
     recordingStatus,
@@ -39,6 +38,14 @@ export default function TabTwoScreen() {
           justifyContent: "center",
         }}
       >
+        <StopButton
+          onPress={() => stopRecording()}
+          disabled={recordingStatus === "idle"}
+          style={{
+            position: "absolute",
+            left: 20,
+          }}
+        />
         <RecordButton
           isRecording={isRecording}
           iconName={
@@ -54,14 +61,6 @@ export default function TabTwoScreen() {
             } else {
               startRecording();
             }
-          }}
-        />
-        <StopButton
-          onPress={() => stopRecording()}
-          disabled={recordingStatus === "idle"}
-          style={{
-            position: "absolute",
-            right: 20,
           }}
         />
       </View>

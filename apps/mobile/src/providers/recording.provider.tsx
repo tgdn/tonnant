@@ -6,6 +6,12 @@ import {
   useAudioRecorder,
   type AudioRecorder,
 } from "expo-audio";
+import { randomUUID } from "expo-crypto";
+import * as FileSystem from "expo-file-system";
+import { File } from "expo-file-system/next";
+import { useRouter } from "expo-router";
+
+import { api } from "@/utils/api";
 
 type RecordingStatus = "idle" | "recording" | "paused";
 
@@ -27,6 +33,9 @@ const RecordingContext = React.createContext<RecordingContextState>(
 );
 
 export function RecordingProvider(props: { children: React.ReactNode }) {
+  const router = useRouter();
+  const { mutateAsync: getPresignedUrl } =
+    api.recording.getPresignedUrl.useMutation();
   const [recordingStatus, setRecordingStatus] =
     React.useState<RecordingStatus>("idle");
   const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
@@ -63,15 +72,44 @@ export function RecordingProvider(props: { children: React.ReactNode }) {
     console.log("Recording paused");
   };
   const stopRecording = async () => {
+    router.push("/upload");
     await audioRecorder.stop();
     setRecordingStatus("idle");
     setRecordingDuration([0, 0, 0]);
     if (intervalIdRef.current) {
       clearInterval(intervalIdRef.current);
     }
-    const uri = audioRecorder.uri;
-    // TODO: handle saving and uploading the recording in the background
-    console.log("Recording stopped and stored at", uri);
+    const recordingUri = audioRecorder.uri;
+    if (recordingUri) {
+      await prepareRecordingForUpload(recordingUri);
+      // TODO: add catch block and store error in SQLite for retry
+    } else {
+      console.error("No recording URI found");
+    }
+  };
+  const prepareRecordingForUpload = async (recordingUri: string) => {
+    const recordingFile = new File(recordingUri);
+    const recordingFileExtensionWithDot = recordingFile.extension;
+    const recordingFileName = `${randomUUID()}${recordingFileExtensionWithDot}`;
+    console.log("Recording stopped and stored at", recordingUri);
+    console.log("Getting presigned URL...");
+    const presignedUrl = await getPresignedUrl({
+      objectKey: recordingFileName,
+      contentType: "audio/mp4",
+    });
+    console.log("Getting presigned URL done");
+    console.log("Uploading recording...");
+    await uploadRecording(recordingUri, presignedUrl);
+    console.log("Uploading recording done");
+  };
+  const uploadRecording = async (
+    recordingUri: string,
+    presignedUrl: string,
+  ) => {
+    const onProgressCallback = (progress: number) => {
+      console.log("upload progress:", progress);
+    };
+    await uploadFile(recordingUri, presignedUrl, onProgressCallback);
   };
   const formattedRecordingDuration = formatRecordingDuration(recordingDuration);
   return (
@@ -108,6 +146,33 @@ function formatRecordingDuration([hours, minutes, seconds]: [
   number,
 ]): string {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+async function uploadFile(
+  recordingUri: string,
+  presignedUrl: string,
+  onProgressCallback: (progress: number) => void,
+) {
+  const uploadTask = new FileSystem.UploadTask(
+    presignedUrl,
+    recordingUri,
+    {
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      httpMethod: "PUT",
+    },
+    (event) => {
+      console.log({
+        totalBytesSent: event.totalBytesSent,
+        totalBytesExpectedToSend: event.totalBytesExpectedToSend,
+      });
+      onProgressCallback(event.totalBytesSent / event.totalBytesExpectedToSend);
+    },
+  );
+  console.log("Uploading recording...");
+  // TODO: handle cancellation
+  const result = await uploadTask.uploadAsync();
+  console.log("Uploading recording done");
+  console.log(result);
 }
 
 export function useRecordingContext() {

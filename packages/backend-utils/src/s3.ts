@@ -11,7 +11,7 @@ const PRESIGNED_GET_URL_EXPIRATION_IN_MINUTES = 30;
 const s3Client = new S3Client({});
 
 export function getExternalS3Arn(bucket: string) {
-  return `arn:aws:s3:${process.env.AWS_REGION}:${process.env.AWS_ACCOUNT_ID}:${bucket}`;
+  return `arn:aws:s3:::${bucket}`;
 }
 
 export function getS3PresignedPutUrl(

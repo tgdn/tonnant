@@ -19,7 +19,6 @@ export default function IndexRouteLayout() {
         headerTitleStyle: {
           color: theme.colors.typography,
         },
-        // headerSearchBarOptions: {},
         // headerRight: () => (
         //   <Link href="/modal" asChild>
         //     <Pressable>

@@ -1,4 +1,5 @@
-export const RECORDINGS_BUCKET_NAME = process.env
-  .RECORDINGS_BUCKET_NAME as string;
-export const RECORDINGS_BUCKET_ARN = process.env
-  .RECORDINGS_BUCKET_ARN as string;
+const IS_OFFLINE = process.env.IS_OFFLINE === "true";
+
+export const RECORDINGS_BUCKET_NAME = IS_OFFLINE
+  ? "api-dev-recordingsbucket304ae6cd-theifmhxnlqz"
+  : process.env.RECORDINGS_BUCKET_NAME;

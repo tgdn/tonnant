@@ -15,6 +15,7 @@ export default function HomeScreen() {
         contentInsetAdjustmentBehavior="automatic"
       >
         <Text style={styles.title}>Content content</Text>
+        <Text style={styles.title}>{data?.userEmail}</Text>
       </ScrollView>
     </SafeAreaView>
   );
