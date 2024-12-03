@@ -22,7 +22,7 @@ export default function TabTwoScreen() {
       <View style={styles.contentContainer}>
         <Text
           style={{
-            fontSize: 50,
+            fontSize: 55,
             fontWeight: "300",
             color: theme.colors.typography,
             fontVariant: ["tabular-nums"],

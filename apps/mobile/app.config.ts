@@ -6,10 +6,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: "Tonnant",
   version: "1.0.0",
   orientation: "portrait",
+  platforms: ["ios", "android"],
   icon: "./assets/images/icon.png",
   scheme: "tonnant",
   userInterfaceStyle: "light",
   newArchEnabled: true,
+  backgroundColor: "#111111",
   splash: {
     image: "./assets/images/splash-icon.png",
     resizeMode: "contain",
@@ -41,6 +43,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   // },
   plugins: [
     "expo-router",
+    [
+      "expo-splash-screen",
+      {
+        backgroundColor: "#ffffff",
+        image: "./assets/images/splash-icon.png",
+        imageWidth: 200,
+      },
+    ],
     "expo-sqlite",
     [
       "expo-audio",

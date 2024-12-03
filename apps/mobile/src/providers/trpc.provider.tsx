@@ -36,7 +36,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
       ],
     }),
   );
-
+  // TODO: add a buster to invalidate the cache, set the maxAge to a reasonable value,
   return (
     <api.Provider client={trpcClient} queryClient={queryClient}>
       <PersistQueryClientProvider

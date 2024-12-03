@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Appearance } from "react-native";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SecureStore from "expo-secure-store";
@@ -23,19 +22,18 @@ export {
   ErrorBoundary,
 } from "expo-router";
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync().catch(console.error);
+SplashScreen.setOptions({ fade: true });
+
+const clerkPublishableKey = process.env
+  .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
+
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   // initialRouteName: "(tabs)",
   initialRouteName: "/",
 };
-
-const clerkPublishableKey = process.env
-  .EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync().catch(console.error);
-
-Appearance.setColorScheme("light");
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
