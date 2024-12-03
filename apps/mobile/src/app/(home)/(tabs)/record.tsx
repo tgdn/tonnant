@@ -15,17 +15,21 @@ export default function TabTwoScreen() {
     stopRecording,
     pauseRecording,
   } = useRecordingContext();
+  const [hours, minutes, seconds, milliseconds] = formattedRecordingDuration;
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text
           style={{
-            fontSize: 70,
+            fontSize: 50,
             fontWeight: "300",
             color: theme.colors.typography,
+            fontVariant: ["tabular-nums"],
           }}
         >
-          {formattedRecordingDuration}
+          {hours}:{minutes}:{seconds}.
+          <Text style={{ fontSize: 30 }}>{milliseconds}</Text>
         </Text>
       </View>
       <View

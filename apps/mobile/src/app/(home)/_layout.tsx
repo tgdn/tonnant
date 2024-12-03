@@ -1,4 +1,3 @@
-import { Text } from "react-native";
 import { useStyles } from "react-native-unistyles";
 import { Stack, useRouter } from "expo-router";
 
